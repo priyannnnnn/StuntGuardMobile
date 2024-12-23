@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1013091713319",
+    "project_id": "supri-74ec7",
+    "storage_bucket": "supri-74ec7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013091713319:android:590b91a81858689e642902",
+        "android_client_info": {
+          "package_name": "com.mobiledevv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPckDg-y6OtoVqpXsSzsMwqHUIxQh-N7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
