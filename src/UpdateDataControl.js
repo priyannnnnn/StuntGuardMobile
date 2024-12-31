@@ -5,9 +5,11 @@ import database from '@react-native-firebase/database';
 // import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-function BabyForm({ route, navigation }) {
+function UpdateDataControl({ route, navigation }) {
 
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const {item} = route.params;
+  const currentUser = auth().currentUser;
   const [date, setDate] = useState(new Date()); // State to manage selected date
 
   const [data, setData] = useState({
@@ -80,6 +82,7 @@ function BabyForm({ route, navigation }) {
       Alert.alert('Error', 'You must be logged in to save data.');
       return;
     }
+    const itemId = item?.id; 
 
     const { stuntingLevel, stuntingPercentage } = calculateStuntingLevel(data);
 
@@ -95,9 +98,9 @@ function BabyForm({ route, navigation }) {
       await sequenceRef.set(currentSequence);
 
       await database()
-        .ref(`/users/${currentUser.uid}/data/${currentSequence}`)
-        .set({
-          ...data,
+        .ref(`/users/${currentUser.uid}/data/${itemId}`)
+        .update({
+          ...data, // Use the updated data object
           stuntingLevel,
           stuntingPercentage,
         });
@@ -106,12 +109,48 @@ function BabyForm({ route, navigation }) {
         'Prediction',
         `Stunting Risk Level: ${stuntingLevel}\nIndication of Stunting: ${stuntingPercentage}%`
       );
-      navigation.navigate('HomePage');
+      navigation.navigate('DataControl');
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'Failed to save data.');
     }
   };
+
+  const getData = async()=>{
+    console.log("item update = ", item.id)
+    const uid = currentUser.uid;
+    try{
+      const snapshot = await database()
+      .ref(`/users/${currentUser.uid}/data/${item.id}`)
+      .once('value');
+    
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      console.log('Fetched data by ID:', data);
+      // return data; // Return the data
+      setData({
+        name:`${data.name}`,
+        age: `${data.age}`,
+        height: `${data.height}`,
+        weight: `${data.weight}`,
+        heightForAge: `${data.heightForAge}`,
+        weightForAge: `${data.weightForAge}`,
+        heightZScore: `${data.heightZScore}`,
+        weightForHeight: `${data.weightForHeight}`,
+        weightZScore: `${data.weightZScore}`,
+        weightGain: `${data.weightGain}`,
+        midUpperArmCircumference: `${data.midUpperArmCircumference}`,
+        infectionCheck: `${data.infectionCheck}`,
+        birthDate: `${data.birthDate}`
+      })
+    } else {
+      console.log('No data found for this ID.');
+      return null;
+    }
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   const handleInputChange = (key, value) => {
     setData({ ...data, [key]: value });
@@ -127,23 +166,27 @@ function BabyForm({ route, navigation }) {
   };
 
   useEffect(() => {
+    console.log("item Update = ", item.id)
     // Any initialization logic can go here
+    getData()
   }, []);
 
   return (
     <View style={styles.container}>
     <ScrollView>
       <View style={styles.section}>
-        <Text style={styles.twoheader}>Toddler Data</Text>
+        <Text style={styles.twoheader}>Update Data</Text>
         <TextInput
           style={styles.input}
           placeholder="Toddler Name"
           onChangeText={(val) => handleInputChange('name', val)}
+          value={data.name}
         />
         <TextInput
           style={styles.input}
           placeholder="Age"
           onChangeText={(val) => handleInputChange('age', val)}
+          value={data.birthDate}
         />
       </View>
   
@@ -153,36 +196,43 @@ function BabyForm({ route, navigation }) {
           style={styles.input}
           placeholder="Height (H)"
           onChangeText={(val) => handleInputChange('height', val)}
+          value={data.height}
         />
         <TextInput
           style={styles.input}
           placeholder="Weight (W)"
           onChangeText={(val) => handleInputChange('weight', val)}
+          value={data.weight}
         />
         <TextInput
           style={styles.input}
           placeholder="Height for Age (H/A)"
           onChangeText={(val) => handleInputChange('heightForAge', val)}
+          value={data.heightForAge}
         />
         <TextInput
           style={styles.input}
           placeholder="Weight for Age (W/A)"
           onChangeText={(val) => handleInputChange('weightForAge', val)}
+          value={data.weightForAge}
         />
         <TextInput
           style={styles.input}
           placeholder="Height Z-Score (ZS H/A)"
           onChangeText={(val) => handleInputChange('heightZScore', val)}
+          value={data.heightZScore}
         />
         <TextInput
           style={styles.input}
           placeholder="Weight Z-Score (ZS W/A)"
           onChangeText={(val) => handleInputChange('weightZScore', val)}
+          value={data.weightZScore}
         />
         <TextInput
           style={styles.input}
           placeholder="Weight for Height (W/H)"
           onChangeText={(val) => handleInputChange('weightForHeight', val)}
+          value={data.weightForHeight}
         />
       </View>
   
@@ -192,16 +242,19 @@ function BabyForm({ route, navigation }) {
           style={styles.input}
           placeholder="Weight Gain"
           onChangeText={(val) => handleInputChange('weightGain', val)}
+          value={data.weightGain}
         />
         <TextInput
           style={styles.input}
           placeholder="Mid-Upper Arm Circumference"
           onChangeText={(val) => handleInputChange('midUpperArmCircumference', val)}
+          value={data.midUpperArmCircumference}
         />
         <TextInput
           style={styles.input}
           placeholder="Infectious Disease Check"
           onChangeText={(val) => handleInputChange('infectionCheck', val)}
+          value={data.infectionCheck}
         />
         <TouchableOpacity
           style={[styles.input, { justifyContent: 'center' }]}
@@ -227,7 +280,7 @@ function BabyForm({ route, navigation }) {
   );
 }
 
-export default BabyForm;
+export default UpdateDataControl;
 
 const styles = StyleSheet.create({
   container: {

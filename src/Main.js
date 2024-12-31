@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DailyTask from './DailyTasks';
 import HomePage from './HomePage';
+import Chatbot from './Chatbot';
 
 export default function Main() {
 
@@ -21,7 +22,7 @@ export default function Main() {
       {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
       {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
       <Tab.Screen name='DailyTask' component={DailyTask}/>
-      <Tab.Screen name='HomePage' component={HomePage}/>
+      <Tab.Screen name='Chatbot' component={Chatbot}/>
     </Tab.Navigator>
   );
 }

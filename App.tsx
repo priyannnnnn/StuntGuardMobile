@@ -27,6 +27,8 @@ import StartScreen from './src/StartScreen';
 import Main from './src/Main';
 import ImmunizationForm from './src/Vaksin';
 import DataImunization from './src/DataImunization';
+import UpdateDataControl from './src/UpdateDataControl';
+import Chatbot from './src/Chatbot';
 
 // Define your stack and tab navigators
 const Stack = createNativeStackNavigator();
@@ -66,6 +68,8 @@ export default function App() {
           <Stack.Screen name='StartScreen' component={StartScreen}/>
           <Stack.Screen name='ImmunizationForm' component={ImmunizationForm}/>
           <Stack.Screen name='DataImunization' component={DataImunization}/>
+          <Stack.Screen name='Chatbot' component={Chatbot}/>
+          <Stack.Screen name='UpdateDataControl' component={UpdateDataControl}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

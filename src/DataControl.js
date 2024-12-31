@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import axios from "axios";
 import database from '@react-native-firebase/database';
+import auth from "@react-native-firebase/auth";
 
 const data = [
   { no: 1, name: "Siti Aminah", tb: 160, bb: 55, sistol: 110, diastol: 70, lila: 26, hb: 12, status: "Normal" },
@@ -17,10 +17,13 @@ const data = [
   { no: 10, name: "Intan Maulida", tb: 164, bb: 64, sistol: 120, diastol: 80, lila: 28.3, hb: 14.5, status: "Normal" },
 ];
 
-const DataControl = () => {
+const DataControl = ({navigation}) => {
   const [dataa, setData] = useState([]);
   const currentUser = auth().currentUser;
   const databaseUrl = 'https://supri-74ec7-default-rtdb.firebaseio.com'; // Replace with your Firebase database URL
+  const [users, setUsers] = useState([]);
+  const [stuntingLevels, setStuntingLevels] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     console.log(currentUser.uid)
@@ -30,19 +33,6 @@ const DataControl = () => {
     }
   
     try {
-      // const idToken = await currentUser.getIdToken();
-      // const url = `${databaseUrl}/users/${currentUser.uid}/data.json?auth=${idToken}`;
-      // const response = await axios.get(url);
-  
-      // if (response.data) {
-      //   console.log("Fetch Data =", response.data);
-  
-      //   // Convert the data to an array if it's a single object
-      //   const fetchedData = Array.isArray(response.data)
-      //     ? response.data
-      //     : [response.data];
-  
-      //   setData(fetchedData);
       const uid = currentUser.uid;
 
       if (!uid) {
@@ -74,9 +64,94 @@ const DataControl = () => {
       Alert.alert('Error', 'Failed to fetch data.');
     }
   };
+
+  const UpdateandDelete = (item) => {
+    console.log("testt")
+    console.log("item = ", item.id)
+    Alert.alert(
+      "Choose Action",
+      `What do you want to do with ${item.name}'s data?`,
+      [
+        {
+          text: "Update",
+          onPress: () => navigation.navigate('UpdateDataControl',{item}), // Pass item to update function
+        },
+        {
+          text: "Delete",
+          onPress: () => Delete(item), // Pass item to delete function
+          style: "destructive",
+        },
+        { text: "Cancel", style: "cancel" },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const Delete = async(item)=> {
+    console.log("Delete = ", item.id)
+    try{
+      await database()
+    .ref(`/users/${currentUser.uid}/data/${item.id}`).remove()
+    console.log('Data succesfully')
+    fetchData()
+    }catch(error){
+      console.error(error)
+    }
+  }
+  const ex = async(item)=>{
+    try{
+      const snapshot = await database()
+      .ref(`/users/${currentUser.uid}/data/${item.id}/stuntingPercentahe`)
+      .once('value');
+      console.log("data stunting = ", snapshot)
+    }catch(err){
+      console.error(err)
+    }
+  }
+
+  const GetAllData = async(item) => {
+    console.log(item.id)
+    try {
+      const currentUser = auth().currentUser;
+
+      if (!currentUser) {
+        throw new Error("User not logged in");
+      }
+
+      // Fetch users if admin
+      const adminClaim = (await currentUser.getIdTokenResult()).claims.isAdmin;
+      if (adminClaim) {
+        database()
+          .ref("/users")
+          .once("value")
+          .then(snapshot => {
+            const usersData = snapshot.val();
+            if (usersData) {
+              setUsers(Object.entries(usersData).map(([key, value]) => ({ id: key, ...value })));
+            }
+          });
+      }
+
+      // Fetch stunting levels
+      database()
+        .ref("/stuntingLevels")
+        .once("value")
+        .then(snapshot => {
+          const stuntingData = snapshot.val();
+          if (stuntingData) {
+            setStuntingLevels(Object.entries(stuntingData).map(([key, value]) => ({ id: key, ...value })));
+          }
+        });
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   useEffect(() =>{
     fetchData()
+    // ex()
   },[])
 
   // useEffect(() => {
@@ -86,7 +161,7 @@ const DataControl = () => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.tableHeader}>
-        <Text style={styles.headerText}>No</Text>
+        {/* <Text style={styles.headerText}>No</Text> */}
         <Text style={styles.headerText}>Nama</Text>
         <Text style={styles.headerText}>TB</Text>
         <Text style={styles.headerText}>BB</Text>
@@ -95,14 +170,15 @@ const DataControl = () => {
         {/* <Text style={styles.headerText}>WHeight</Text>
         <Text style={styles.headerText}>WZScore</Text> */}
         <Text style={styles.headerText}>Level</Text>
-        <Text style={styles.headerText}>Info Lain</Text>
+        <Text style={styles.headerText}></Text>
+        <Text style={styles.headerText}></Text>
       </View>
 
       {/* Data Rows */}
       <ScrollView>
   {dataa.map((item, index) => (
     <View key={index} style={[styles.tableRow, index % 2 === 0 && styles.rowEven]}>
-      <Text style={styles.cell}>{item.no}</Text>
+      {/* <Text style={styles.cell}>{item.no}</Text> */}
       <Text style={styles.cell}>{item.name}</Text>
       <Text style={styles.cell}>{item.height}</Text>
       <Text style={styles.cell}>{item.weight}</Text>
@@ -111,13 +187,19 @@ const DataControl = () => {
       <Text style={styles.cell}>{item.weightForHeight}</Text> */}
       <Text style={styles.cell}>{item.stuntingLevel}</Text>
       <Text style={styles.cell}>{item.infectionCheck}</Text>
-      <TouchableOpacity style={styles.infoButton}>
-        <Text style={styles.infoButtonText}>i</Text>
+      <TouchableOpacity 
+        onPress={() => UpdateandDelete(item)} 
+        style={styles.infoButton}>
+          <Text style={styles.infoButtonText}>Update</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        onPress={GetAllData} 
+        style={styles.deleteButton}>
+          <Text style={styles.infoButtonTextDelete}>All</Text>
       </TouchableOpacity>
     </View>
   ))}
 </ScrollView>
-
     </View>
   );
 };
@@ -161,10 +243,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#D8C6FF',
-    borderRadius: 5,
+    borderRadius: 0,
+    flexDirection: 'row',
+  },
+  deleteButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFCDD2', // Different background color for delete
+    borderRadius: 0,
+    flexDirection: 'row',
   },
   infoButtonText: {
     color: '#5A2D82',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  infoButtonTextDelete: {
+    color: '#C30E59',
     fontSize: 12,
     fontWeight: 'bold',
   },

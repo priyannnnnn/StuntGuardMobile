@@ -8446,7 +8446,7 @@
     "base-64" "^0.1.0"
     "utf8" "^3.0.0"
 
-"react-native-gesture-handler@>=2.0.0":
+"react-native-gesture-handler@^2.21.2", "react-native-gesture-handler@>=2.0.0":
   "integrity" "sha512-HcwB225K9aeZ8e/B8nFzEh+2T4EPWTeamO1l/y3PcQ9cyCDYO2zja/G31ITpYRIqkip7XzGs6wI/gnHOQn1LDQ=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.21.2.tgz"
   "version" "2.21.2"
@@ -8490,10 +8490,10 @@
   dependencies:
     "prop-types" "^15.7.2"
 
-"react-native-reanimated@*", "react-native-reanimated@^3.16.3", "react-native-reanimated@>=2.0.0", "react-native-reanimated@>=3.0.0":
-  "integrity" "sha512-OWlA6e1oHhytTpc7WiSZ7Tmb8OYwLKYZz29Sz6d6WAg60Hm5GuAiKIWUG7Ako7FLcYhFkA0pEQ2xPMEYUo9vlw=="
-  "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.16.3.tgz"
-  "version" "3.16.3"
+"react-native-reanimated@*", "react-native-reanimated@^3.16.6", "react-native-reanimated@>=2.0.0", "react-native-reanimated@>=3.0.0":
+  "integrity" "sha512-jPbAfLF5t8+UCKFTO+LeOY+OmAcDP5SsAfqINvNQz5GFGvoO7UebxujjtY58CmpZNH6c3SQ514FF9//mZDpo/g=="
+  "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.16.6.tgz"
+  "version" "3.16.6"
   dependencies:
     "@babel/plugin-transform-arrow-functions" "^7.0.0-0"
     "@babel/plugin-transform-class-properties" "^7.0.0-0"

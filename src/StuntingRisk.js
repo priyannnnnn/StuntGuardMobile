@@ -82,53 +82,56 @@ const StuntingRisk = () => {
   
   return (
     <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Risiko Stunting</Text>
-        <Text style={styles.percentage}>{data.stuntingPercentage}%</Text>
-        <Text style={styles.riskLevel}>Risiko Stunting {data.stuntingLevel}</Text>
-      </View>
-
-      {/* Section: Rincian Stunting */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Rincian Stunting</Text>
-        <Text style={styles.subtitle}>Kekurangan Gizi pada Balita</Text>
-        <Text style={styles.text}>
-          Kekurangan gizi adalah penyebab utama stunting pada balita. Berikut adalah rincian penyebabnya:
-        </Text>
-        <Text style={styles.bulletPoint}>1. Tinggi Badan (TB) / Usia (U)</Text>
-        <Text style={styles.text}>Tinggi badan balita lebih pendek dari standar tinggi badan untuk usia yang sama.</Text>
-        <Text style={styles.bulletPoint}>2. Berat Badan (BB) / Tinggi Badan (TB)</Text>
-        <Text style={styles.text}>
-          Berat badan balita tidak sebanding dengan tinggi badannya, seringkali berada di bawah standar yang ditentukan.
-        </Text>
-        <Text style={styles.bulletPoint}>3. Lingkar Lengan Atas (LILA)</Text>
-        <Text style={styles.text}>
-          Lingkar lengan atas balita lebih kecil dari ukuran standar yang ditentukan untuk usia tertentu.
-        </Text>
-        <Text style={styles.bulletPoint}>4. Kondisi Kesehatan</Text>
-        <Text style={styles.text}>
-          Balita lebih rentan terhadap infeksi dan penyakit karena sistem kekebalan tubuh yang lemah.
-        </Text>
-      </View>
-
-      {/* Section: Penanganan Stunting */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Penanganan Stunting</Text>
-        <Text style={styles.text}>
-          Penanganan stunting yang disebabkan oleh kekurangan gizi pada balita memerlukan pendekatan yang komprehensif:
-        </Text>
-        <Text style={styles.bulletPoint}>1. Nutrisi yang Adekuat</Text>
-        <Text style={styles.text}>- ASI Eksklusif selama 6 bulan pertama.</Text>
-        <Text style={styles.text}>- MP-ASI setelah 6 bulan.</Text>
-        <Text style={styles.text}>- Makanan seimbang kaya protein, zat besi, vitamin, dan mineral.</Text>
-      </View>
-
-      {/* Button */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>SIMPAN DATA</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    {/* Header */}
+    <View style={styles.header}>
+      <Text style={styles.headerTitle}>Stunting Risk</Text>
+      <Text style={styles.percentage}>{data.stuntingPercentage}%</Text>
+      <Text style={styles.riskLevel}>Stunting Risk Level: {data.stuntingLevel}</Text>
+    </View>
+  
+    {/* Section: Stunting Details */}
+    <View style={styles.section}>
+      <Text style={styles.sectionTitle}>Stunting Details</Text>
+      <Text style={styles.subtitle}>Malnutrition in Toddlers</Text>
+      <Text style={styles.text}>
+        Malnutrition is the main cause of stunting in toddlers. Below are the details of its causes:
+      </Text>
+      <Text style={styles.bulletPoint}>1. Height (H) / Age (A)</Text>
+      <Text style={styles.text}>
+        The toddler's height is shorter than the standard height for the same age.
+      </Text>
+      <Text style={styles.bulletPoint}>2. Weight (W) / Height (H)</Text>
+      <Text style={styles.text}>
+        The toddler's weight is disproportionate to their height, often below the determined standard.
+      </Text>
+      <Text style={styles.bulletPoint}>3. Upper Arm Circumference (UAC)</Text>
+      <Text style={styles.text}>
+        The toddler's upper arm circumference is smaller than the standard size determined for their age.
+      </Text>
+      <Text style={styles.bulletPoint}>4. Health Conditions</Text>
+      <Text style={styles.text}>
+        Toddlers are more prone to infections and diseases due to a weakened immune system.
+      </Text>
+    </View>
+  
+    {/* Section: Stunting Treatment */}
+    <View style={styles.section}>
+      <Text style={styles.sectionTitle}>Stunting Treatment</Text>
+      <Text style={styles.text}>
+        Treating stunting caused by malnutrition in toddlers requires a comprehensive approach:
+      </Text>
+      <Text style={styles.bulletPoint}>1. Adequate Nutrition</Text>
+      <Text style={styles.text}>- Exclusive breastfeeding for the first 6 months.</Text>
+      <Text style={styles.text}>- Complementary feeding after 6 months.</Text>
+      <Text style={styles.text}>- Balanced meals rich in protein, iron, vitamins, and minerals.</Text>
+    </View>
+  
+    {/* Button */}
+    <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>SAVE DATA</Text>
+    </TouchableOpacity>
+  </ScrollView>
+  
   );
 };
 

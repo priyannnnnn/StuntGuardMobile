@@ -7,6 +7,7 @@ import {
   LineChart,PieChart
 } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
+// import firebase from './firebase';
 
 function HomePage({navigation, route}){
   // const { score } = route.params;
@@ -52,6 +53,41 @@ function HomePage({navigation, route}){
       ]
     );
   }; 
+
+  const fetchStuntingLevelsFromAPI = async () => {
+    try { const idToken = await currentUser.getIdToken();
+      const response = await fetch(`https://supri-74ec7-default-rtdb.firebaseio.com/users/data.json?auth=${idToken}`); // Replace with your Firebase API URL
+      const data = await response.json();
+  
+      const stuntingLevels = {
+        "High Risk": 0,
+        "Moderate Risk": 0,
+        "Low Risk": 0,
+        "Unknown Risk": 0,
+      };
+  
+      Object.values(data.users).forEach((user) => {
+        if (user.data) {
+          const records = Array.isArray(user.data) ? user.data : [user.data];
+  
+          records.forEach((record) => {
+            if (record && record.stuntingLevel) {
+              const level = record.stuntingLevel;
+              if (stuntingLevels[level] !== undefined) {
+                stuntingLevels[level]++;
+              }
+            }
+          });
+        }
+      });
+  
+      console.log("Processed Stunting Levels:", stuntingLevels);
+      return stuntingLevels;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  
 
   
   const NutritionScore = ({ score, label }) => (
@@ -146,6 +182,9 @@ function HomePage({navigation, route}){
         <TouchableOpacity style={styles.joinButton} onPress={showConfirmDialog}>
           <Text style={styles.joinButtonText}>Add</Text>
         </TouchableOpacity>
+        {/* <TouchableOpacity style={styles.joinButton} onPress={fetchStuntingLevelsFromAPI}>
+          <Text style={styles.joinButtonText}>Add1</Text>
+        </TouchableOpacity> */}
       </View>
 
       <Text style={styles.sectionTitle}>Risk Level</Text>

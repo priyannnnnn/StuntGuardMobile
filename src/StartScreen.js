@@ -44,7 +44,7 @@ function StartScreen({navigation}){
   }
   
   if (user) {
-    navigation.replace('LandingPage'); // Replace StartScreen with LandingPage
+    navigation.replace('Main'); // Replace StartScreen with LandingPage
     return null;
   }
   
