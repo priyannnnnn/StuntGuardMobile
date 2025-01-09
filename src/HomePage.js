@@ -7,6 +7,7 @@ import {
   LineChart,PieChart
 } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
+import Icon from 'react-native-vector-icons/Entypo';
 // import firebase from './firebase';
 
 function HomePage({navigation, route}){
@@ -182,6 +183,11 @@ function HomePage({navigation, route}){
         <TouchableOpacity style={styles.joinButton} onPress={showConfirmDialog}>
           <Text style={styles.joinButtonText}>Add</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.joinButton} onPress={()=> navigation.navigate('Chatbot')}>
+          {/* <Text style={styles.joinButtonText}>Chat</Text> */}
+          <Icon name="chat" size={17} color="#FEF9E1" />
+        </TouchableOpacity>
+      
         {/* <TouchableOpacity style={styles.joinButton} onPress={fetchStuntingLevelsFromAPI}>
           <Text style={styles.joinButtonText}>Add1</Text>
         </TouchableOpacity> */}
@@ -239,7 +245,6 @@ function HomePage({navigation, route}){
       <Text>tunting is a chronic .</Text>
       <Text>resulting from a nutritional ,</Text>
       <Text style={{color:'green'}}>See All</Text>
-
       </View>
 
     </View>

@@ -225,7 +225,7 @@ function DailyTask({navigation}){
         </TouchableOpacity>
       </View>
       
-      <TouchableOpacity style={{marginLeft:300, marginBottom:30}} onPress={()=>{ console.log(level)}}>
+      <TouchableOpacity style={{marginLeft:300, marginBottom:30}} onPress={()=>navigation.navigate('HealthyFoodApp')}>
         <Text>Show All</Text>
       </TouchableOpacity>
 

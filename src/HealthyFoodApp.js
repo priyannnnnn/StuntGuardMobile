@@ -1,125 +1,171 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import {
-  LineChart,
-} from "react-native-chart-kit";
-import { Dimensions } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Alert, FlatList, Text } from 'react-native';
+import { List, ActivityIndicator, Button } from 'react-native-paper';
+import { LineChart } from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
-const HealthyFoodApp = () => {
-  // Example chart data
-  const chartData = [
-    { day: "Mon", meals: 2 },
-    { day: "Tue", meals: 1 },
-    { day: "Wed", meals: 6 },
-    { day: "Thu", meals: 3 },
-    { day: "Fri", meals: 2 },
-    { day: "Sat", meals: 5 },
-    { day: "Sun", meals: 4 },
-  ];
+const HealthyFoodApp = ({navigation}) => {
+  const [userData, setUserData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const currentUser = auth().currentUser;
+  
+      if (!currentUser) {
+        Alert.alert('Error', 'You must be logged in to view data.');
+        setLoading(false);
+        return;
+      }
+  
+      try {
+        const snapshot = await database()
+          .ref(`/users/${currentUser.uid}/daily`) // Path to the user's data
+          .once('value'); // Fetch data once
+  
+        if (snapshot.exists()) {
+          const rawData = snapshot.val(); // Raw data from the snapshot
+          const data = Object.values(rawData)
+            .map((item) => item.aggregatedResult)
+            .filter(
+              (result) =>
+                result &&
+                result.date &&
+                result.protein &&
+                result.carbs &&
+                result.calories
+            );
+  
+          console.log('data = ', data); // Filtered and usable data
+          console.log('rawData = ', rawData); // Raw data
+          setUserData(data); // Use filtered data for the UI
+        } else {
+          console.log('No data available');
+          setUserData([]); // Set empty array if no data is available
+        }
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'Failed to fetch data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  if (loading) {
+    return <ActivityIndicator style={styles.loading} />;
+  }
+
+  const renderItem = ({ item }) => (
+    <List.Item
+      title={`Date: ${item.date}`}
+      description={`Protein: ${item.protein}g, Carbs: ${item.carbs}g, Calories: ${item.calories}`}
+      left={(props) => <List.Icon {...props} icon="calendar" />}
+      style={styles.listItem}
+    />
+  );
+  console.log("users data = ", userData)
+  const proteinData = userData.map((item) => (item.protein ? parseFloat(item.protein) : 0));
+  const carbData = userData.map((item) => (item.carbs ? parseFloat(item.carbs) : 0));
+  const labels = userData.map((item) => (item.date ? item.date.slice(-5) : 'N/A'));
 
   return (
     <View style={styles.container}>
-      <Text style={styles.levelText}>LVL 1</Text>
-      <Text style={styles.title}>HEALTHY FOOD</Text>
-      <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>MEALS EATEN</Text>
-          <LineChart
-            data={{
-            labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni"],
+      <Text style={styles.header}>Your Daily Nutrition Records</Text>
+
+      {userData.length > 0 && (
+        <LineChart
+          data={{
+            labels,
             datasets: [
-                {
-                data: [
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100
-                ]
-                }
-            ]
-            }}
-            width={Dimensions.get("window").width - 50} // from react-native
-            height={220}
-            yAxisLabel={"Rp"}
-            chartConfig={{
-            backgroundColor: "red",
-            backgroundGradientFrom: "red",
-            backgroundGradientTo: "red",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `white`,
-            labelColor: (opacity = 1) => `white`,
+              {
+                data: proteinData,
+                color: () => '#FF6384', // Protein Line Color
+                strokeWidth: 2,
+              },
+              {
+                data: carbData,
+                color: () => '#36A2EB', // Carbs Line Color
+                strokeWidth: 2,
+              },
+            ],
+            legend: ['Protein (g)', 'Carbs (g)'],
+          }}
+          width={Dimensions.get('window').width - 32}
+          height={220}
+          chartConfig={{
+            backgroundColor: '#ffffff',
+            backgroundGradientFrom: '#f7f7f7',
+            backgroundGradientTo: '#ffffff',
+            decimalPlaces: 1,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
             style: {
-                borderRadius: 16
-            }
-            }}
-            style={{
-            marginVertical: 8,
-            borderRadius: 16
-            }}
-          />
-          
-      </View>
-      <View style={styles.information}>
-        <Text style={styles.Text}>Eat Vegetables :{} exp</Text>
-        <Text style={styles.Text}>Prental Exercise :{} exp</Text>
-        <Text style={styles.Text}>Costum Vitamin : {} exp</Text>
-      </View>
+              borderRadius: 8,
+            },
+          }}
+          style={styles.chart}
+        />
+      )}
+
+      <FlatList
+        data={userData}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => `${item.date}-${index}`}
+        style={styles.list}
+      />
+
+      <Button
+        mode="contained"
+        style={styles.button}
+        onPress={() => navigation.navigate('Example') }
+      >
+        Add New Record
+      </Button>
     </View>
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#F8BBD0",
+    padding: 16,
+    backgroundColor: '#f5f5f5',
   },
-  levelText: {
-    fontSize: 18,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  title: {
+  header: {
     fontSize: 22,
-    textAlign: "center",
-    marginVertical: 10,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
   },
-  progressBar: {
-    marginVertical: 20,
+  list: {
+    marginTop: 16,
+    flex: 1,
   },
-  chartContainer: {
-    marginVertical: 20,
-    alignItems: "center",
+  listItem: {
+    backgroundColor: '#fff',
+    marginBottom: 8,
+    borderRadius: 8,
+    elevation: 2,
+    padding: 8,
   },
-  chartTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 10,
+  chart: {
+    marginVertical: 16,
+    borderRadius: 8,
   },
-  Text:{
-    fontSize:20,
-    fontWeight:'600'
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  information:{
-    padding:30,
-    backgroundColor:'white',
-    borderRadius:20
-  }
+  button: {
+    marginVertical: 16,
+    padding: 8,
+  },
 });
 
 export default HealthyFoodApp;

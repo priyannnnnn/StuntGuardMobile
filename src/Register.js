@@ -43,11 +43,11 @@ const Register = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Daftar</Text>
+      <Text style={styles.title}>Register</Text>
 
       {/* Name Input */}
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Nama</Text>
+        <Text style={styles.label}>Name</Text>
         <TextInput
           style={styles.input}
           placeholder="Masukkan Nama Lengkap"
@@ -85,7 +85,7 @@ const Register = ({ navigation }) => {
 
       {/* Role Selection */}
       <View style={styles.roleContainer}>
-        <Text style={styles.label}>Pilih Peran:</Text>
+        <Text style={styles.label}>Choose Roles:</Text>
         <TouchableOpacity
           style={[styles.roleButton, role === 'experiencing_pregnancy' && styles.roleSelected]}
           onPress={() => setRole('experiencing_pregnancy')}
@@ -102,7 +102,7 @@ const Register = ({ navigation }) => {
 
       {/* Submit Button */}
       <TouchableOpacity style={styles.submitButton} onPress={handleRegister}>
-        <Text style={styles.submitButtonText}>Daftar</Text>
+        <Text style={styles.submitButtonText}>Register</Text>
       </TouchableOpacity>
     </View>
   );

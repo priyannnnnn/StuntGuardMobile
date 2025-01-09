@@ -170,8 +170,8 @@ const DataControl = ({navigation}) => {
         {/* <Text style={styles.headerText}>WHeight</Text>
         <Text style={styles.headerText}>WZScore</Text> */}
         <Text style={styles.headerText}>Level</Text>
-        <Text style={styles.headerText}></Text>
-        <Text style={styles.headerText}></Text>
+        <Text style={styles.headerText}>Stunt%</Text>
+        <Text style={styles.headerText}>info</Text>
       </View>
 
       {/* Data Rows */}
@@ -187,16 +187,17 @@ const DataControl = ({navigation}) => {
       <Text style={styles.cell}>{item.weightForHeight}</Text> */}
       <Text style={styles.cell}>{item.stuntingLevel}</Text>
       <Text style={styles.cell}>{item.infectionCheck}</Text>
+      <Text style={styles.cell}>{item.stuntingPercentage}%</Text>
       <TouchableOpacity 
         onPress={() => UpdateandDelete(item)} 
         style={styles.infoButton}>
-          <Text style={styles.infoButtonText}>Update</Text>
+          <Text style={styles.infoButtonText}>U&D</Text>
       </TouchableOpacity>
-      <TouchableOpacity 
+      {/* <TouchableOpacity 
         onPress={GetAllData} 
         style={styles.deleteButton}>
           <Text style={styles.infoButtonTextDelete}>All</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   ))}
 </ScrollView>

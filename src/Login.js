@@ -23,7 +23,7 @@ function Login({navigation}){
     try {
       // Log the user in
       await loginUser(email, password);
-      navigation.navigate('LandingPage')
+      navigation.navigate('Main')
       
       // Fetch the user's ID token
       const token = await getIdToken();
@@ -76,7 +76,7 @@ function Login({navigation}){
       {/* Divider */}
       <View style={styles.dividerContainer}>
         <View style={styles.line} />
-        <Text style={styles.dividerText}>atau</Text>
+        <Text style={styles.dividerText}>or</Text>
         <View style={styles.line} />
       </View>
 
@@ -86,13 +86,13 @@ function Login({navigation}){
           source={require('./image/Google.png')}
           style={styles.googleIcon}
         />
-        <Text style={styles.googleButtonText}>Lanjut dengan Google</Text>
+        <Text style={styles.googleButtonText}>Continues with Google</Text>
       </TouchableOpacity>
 
       <View style={styles.signupTextContainer}>
-        <Text style={styles.signupText}>Belum punya akun? </Text>
+        <Text style={styles.signupText}>haven't account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.signupLink}>Daftar disini.</Text>
+          <Text style={styles.signupLink}>register.</Text>
         </TouchableOpacity>
       </View>
     </View>

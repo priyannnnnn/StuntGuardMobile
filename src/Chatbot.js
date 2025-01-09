@@ -13,71 +13,89 @@ const predefinedInstruction = `
 `;
 
 const context = `
-     Hospital Inquiry Content
-      Hospital Inquiry:
-        Hospital Name: XYZ Multispecialty Hospital
-        Address: 5th Floor, 501, Binori Bsquare2, Ambli - Bopal Rd, nr. Double Tree By Hilton, Vikram Nagar, Ahmedabad, Gujarat 380058
-        Contact Number (Reception): +123-456-7890
-        Location Map Link: ${Platform.OS === 'ios' ? "maps://?q=XYZ Multispecialty Hospital&ll=23.02839,72.4968785" : "geo:23.02839,72.4968785?q=23.02839,72.4968785(XYZ Multispecialty Hospital)" }
-      Hospital Timings
-        Weekdays: 8:00 AM – 8:00 PM
-        Weekends: 9:00 AM – 5:00 PM
-        Emergency Services: Available 24/7
-        Uncertain Hours: If specific timing is not listed, contact the reception at +123-456-7890 for clarification.
-      Doctor Details
-        1. Dr. Alice Johnson
-          Specialization: Surgeon (MD)
-          Availability:
-          Monday to Friday: 10:00 AM – 2:00 PM
-          Saturday: 12:00 PM – 3:00 PM
-          Emergency Contact: +123-987-6543
-          "If no suitable timing is available, please contact the reception desk at +123-456-7890 for alternative options."
-        2. Dr. Bob Smith
-          Specialization: BHMS
-          Availability:
-          Monday to Thursday: 2:00 PM – 5:00 PM
-          Friday: 9:00 AM – 12:00 PM
-          Emergency Contact: +123-654-3210
-          "For specific concerns or if timings are unclear, reach out to the doctor's office directly."
-        3. Dr. Carol Lee
-          Specialization: Pediatrician
-          Availability:
-          Monday, Wednesday, Friday: 10:00 AM – 1:00 PM
-          Emergency Contact: +123-321-9870
-      How to Book an Appointment
-        1. Online:
-          Visit "hospitalwebsite.com/appointments".
-          Select your doctor and preferred time slot.
-          Provide your contact details and confirm.
-      "If you face any issues, contact the reception desk at +123-456-7890."
-        2. Phone Booking:
-          Call the reception desk at +123-456-7890 and provide your details.
-      How to Cancel an Appointment
-        1. Online:
-          Go to "hospitalwebsite.com/cancel".
-          Enter your booking ID and phone number.
-        2. Phone Cancellation:
-          Contact the reception desk at +123-456-7890.
-      "If you do not have your booking ID or face technical difficulties, call the reception desk for further assistance."
-      List of Services Provided by XYZ Multispecialty Hospital:
-        1. General Consultation: 
-          Our experienced doctors provide general consultations for various health concerns, including routine check-ups, advice, and diagnosis.
-        2. Surgical Services: 
-          We offer a wide range of surgical services, from minor procedures to major surgeries, with state-of-the-art equipment and expert surgeons.
-        3. Emergency Care: 
-          Available 24/7, our emergency care unit is equipped to handle all types of medical emergencies with quick and efficient treatment.
-        4. Pediatrics: 
-          Our pediatricians offer care for children, including immunizations, routine check-ups, and treatment for childhood diseases.
-        5. Radiology & Imaging: 
-          Advanced diagnostic imaging services, including X-rays, MRIs, CT scans, and ultrasounds.
-        6. Physiotherapy: 
-            Rehabilitation services for recovery from surgery, injury, and chronic conditions, with expert physiotherapists.
-      Missing or Unclear Information
-        If you cannot find the required details or have additional questions:
-          Contact the reception desk: +123-456-7890
-          Email inquiries: support@xyzmultispecialty.com
-      "We are here to assist you with all your queries. If the required information is unavailable in the above sections, please reach out to the provided contact numbers or email for further assistance."
+     Relationship Stunting Context
+      What is Relationship Stunting:
+        Relationship stunting refers to a situation where the emotional, intellectual, or mutual growth of a relationship is hindered or stagnant due to various reasons such as lack of communication, unresolved conflicts, emotional immaturity, or external pressures.
+
+      Common Signs of Relationship Stunting:
+        1. Lack of Emotional Intimacy:
+          Partners struggle to connect on a deeper emotional level, often feeling distant or misunderstood.
+        2. Poor Communication:
+          Conversations are surface-level, and important issues are avoided or dismissed.
+        3. Resentment and Unresolved Conflicts:
+          Past conflicts remain unresolved, creating a barrier to growth and trust.
+        4. Fear of Commitment:
+          One or both partners avoid discussing the future or making long-term plans.
+        5. Dependency or Control:
+          One partner excessively depends on or tries to control the other, hindering individual and relational growth.
+
+      Causes of Relationship Stunting:
+        1. Emotional Immaturity:
+          Partners may lack the emotional skills needed to nurture and grow a healthy relationship.
+        2. Fear of Vulnerability:
+          Difficulty in being open and honest can limit connection and trust.
+        3. External Stressors:
+          Financial issues, work stress, or family interference can overshadow the relationship.
+        4. Mismatched Goals:
+          Partners may have different expectations or long-term goals that are not aligned.
+
+      How to Prevent Relationship Stunting:
+        1. Foster Open Communication:
+          Regularly share thoughts, feelings, and experiences to build trust and understanding.
+        2. Establish Healthy Boundaries:
+          Respect each other's individuality while setting boundaries that promote mutual growth.
+        3. Practice Empathy:
+          Show understanding and compassion for each other's feelings and perspectives.
+        4. Nurture Emotional Intimacy:
+          Spend quality time together, engage in meaningful conversations, and express affection.
+        5. Align Goals Early:
+          Discuss and agree on long-term goals, values, and priorities in the relationship.
+
+      How to Handle Relationship Stunting:
+        1. Identify the Root Cause:
+          Reflect on and discuss the factors causing stunting, such as unresolved issues or emotional barriers.
+        2. Seek Counseling or Therapy:
+          Professional guidance can provide tools to address challenges and rebuild the relationship.
+        3. Reconnect Intentionally:
+          Dedicate time to rekindling emotional intimacy through shared activities, hobbies, or travel.
+        4. Address Past Conflicts:
+          Resolve lingering conflicts by discussing them openly and finding common ground.
+        5. Focus on Personal Growth:
+          Encourage individual self-improvement to enhance the relationship as a whole.
+
+      How to Educate About Relationship Stunting:
+        1. Awareness Campaigns:
+          Share articles, blogs, and social media posts about recognizing and addressing relationship stunting.
+        2. Workshops and Seminars:
+          Organize events on communication skills, emotional intelligence, and conflict resolution.
+        3. Include Relationship Education in Schools:
+          Teach young adults about building healthy relationships and emotional resilience.
+        4. Publish Guides and Resources:
+          Create accessible resources, such as e-books or videos, about the importance of mutual growth in relationships.
+        5. Promote Counseling Services:
+          Advocate for couples counseling as a proactive measure rather than a last resort.
+
+      When to Seek Help:
+        - If unresolved issues persist despite attempts to address them.
+        - When one or both partners feel unhappy or unfulfilled for an extended period.
+        - If there are signs of emotional or physical abuse.
+
+      Helpful Resources:
+        1. Books:
+          - "The Seven Principles for Making Marriage Work" by John Gottman
+          - "Hold Me Tight: Seven Conversations for a Lifetime of Love" by Dr. Sue Johnson
+          - "Attached: The New Science of Adult Attachment and How It Can Help You Find—and Keep—Love" by Amir Levine and Rachel Heller
+        2. Online Support:
+          - Relationship forums and counseling services.
+        3. Hotlines:
+          - National Domestic Violence Hotline: +1-800-799-7233
+        4. Websites:
+          - "relationshipadvice.com"
+          - "therapyfinder.com"
+
+      "For any further details or assistance, feel free to reach out to professionals or explore the resources listed above."
 `;
+
 
 const askQuestionToGemini = async (question) => {
   try {

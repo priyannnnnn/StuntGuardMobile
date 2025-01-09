@@ -1,28 +1,52 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DailyTask from './DailyTasks';
 import HomePage from './HomePage';
-import Chatbot from './Chatbot';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Main() {
 
-  const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { backgroundColor: '#f0f0f0' }, // Customize tab bar
+        tabBarStyle: { 
+          backgroundColor: '#ffffff', // Set tab bar background
+          height: 70, // Increase height for larger tabs
+          paddingBottom: 0, // Space below the icons and labels
+        },
+        tabBarLabelStyle: {
+          fontSize: 14, // Larger label text
+          fontWeight: 'bold',
+        },
+        tabBarActiveTintColor: '#4CAF50', // Active tab color
+        tabBarInactiveTintColor: '#888888', // Inactive tab color
       }}
     >
-      {/* <Tab.Screen name="Home" component={HomeScreen} /> */}
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
-      <Tab.Screen name='DailyTask' component={DailyTask}/>
-      <Tab.Screen name='Chatbot' component={Chatbot}/>
+      <Tab.Screen 
+        name="DailyTask" 
+        component={DailyTask}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="assessment" color={color} size={35} /> // Larger icon size
+          ),
+          tabBarLabel: 'Daily Tasks', // Customize the label
+        }}
+      />
+      <Tab.Screen 
+        name="HomePage" 
+        component={HomePage}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={color} size={35} /> // Larger icon size
+          ),
+          tabBarLabel: 'Home', // Customize the label
+        }}
+      />
     </Tab.Navigator>
   );
 }

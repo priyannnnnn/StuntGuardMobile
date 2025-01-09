@@ -9,18 +9,19 @@ function homePage2({navigation}){
             style={styles.image}
             />
             <Text style={styles.title}>
-            Cegah Stunting {'\n'}dengan StuntGuard
+            Prevent Stunting {'\n'}with StuntGuard
             </Text>
             <Text style={styles.subtitle}>
-            Deteksi Dini dan interverensi tepat untuk masa depan yang cerah
+            Early detection and appropriate intervention for a bright future
             </Text>
             <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('Login')}>
-            <Text style={styles.buttonText}>Lanjut</Text>
+            <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
         </View>
     )
 }
 export default homePage2;
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -64,4 +65,4 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
     },
-  });
+});
